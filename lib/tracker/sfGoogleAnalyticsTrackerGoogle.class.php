@@ -41,19 +41,30 @@ class sfGoogleAnalyticsTrackerGoogle extends sfGoogleAnalyticsTracker
   public function insert(sfResponse $response)
   {
     $tracker = $this->getTrackerVar();
-    
+
+
     $html = array();
     $html[] = '<script type="text/javascript">';
-    $html[] = '//<![CDATA[';
-    $html[] = 'var gaJsHost=(("https:"==document.location.protocol)?"https://ssl.":"http://www.");';
-    $html[] = 'document.write(unescape("%3Cscript src=\'"+gaJsHost+"google-analytics.com/ga.js\' type=\'text/javascript\'%3E%3C/script%3E"));';
-    $html[] = '//]]>';
+    $html[] = 'var _gaq = _gaq || [];';
+    $html[] = sprintf('_gaq.push(["_setAccount", "%s"]);',$this->escape($this->getProfileId()));
+    $html[] = '_gaq.push(["_trackPageview"]);';
+    $html[] = '(function() {';
+    $html[] = 'var ga = document.createElement("script"); ga.type = "text/javascript"; ga.async = true;';
+    $html[] = 'ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";';
+    $html[] = 'var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ga, s);';
+    $html[] = '})();';
     $html[] = '</script>';
+
+//    $html[] = '<script type="text/javascript">';
+//    $html[] = '//<![CDATA[';
+//    $html[] = 'var gaJsHost=(("https:"==document.location.protocol)?"https://ssl.":"http://www.");';
+//    $html[] = 'document.write(unescape("%3Cscript src=\'"+gaJsHost+"google-analytics.com/ga.js\' type=\'text/javascript\'%3E%3C/script%3E"));';
+//    $html[] = '//]]>';
+//    $html[] = '</script>';
     $html[] = '<script type="text/javascript">';
     $html[] = '//<![CDATA[';
-    
-    $html[] = sprintf('var %s=_gat._getTracker(%s);', $tracker, $this->escape($this->getProfileId()));
-    $html[] = sprintf('%s._initData();', $tracker);
+//    $html[] = sprintf('var %s=_gat._getTracker(%s);', $tracker, $this->escape($this->getProfileId()));
+//    $html[] = sprintf('%s._initData();', $tracker);
     
     if ($domainName = $this->getDomainName())
     {
