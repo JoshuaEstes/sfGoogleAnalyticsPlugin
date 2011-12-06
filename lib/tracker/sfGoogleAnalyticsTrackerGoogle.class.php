@@ -46,7 +46,7 @@ class sfGoogleAnalyticsTrackerGoogle extends sfGoogleAnalyticsTracker
     $html = array();
     $html[] = '<script type="text/javascript">';
     $html[] = 'var _gaq = _gaq || [];';
-    $html[] = sprintf('_gaq.push(["_setAccount", "%s"]);',$this->escape($this->getProfileId()));
+    $html[] = sprintf('_gaq.push(["_setAccount", "%s"]);',$this->getProfileId());
     $html[] = '_gaq.push(["_trackPageview"]);';
     $html[] = '(function() {';
     $html[] = 'var ga = document.createElement("script"); ga.type = "text/javascript"; ga.async = true;';
@@ -177,11 +177,11 @@ class sfGoogleAnalyticsTrackerGoogle extends sfGoogleAnalyticsTracker
     
     if ($pageName = $this->getPageName())
     {
-      $html[] = sprintf('%s._trackPageview(%s);', $tracker, $this->escape($pageName));
+//      $html[] = sprintf('%s._trackPageview(%s);', $tracker, $this->escape($pageName));
     }
     else
     {
-      $html[] = sprintf('%s._trackPageview();', $tracker);
+//      $html[] = sprintf('%s._trackPageview();', $tracker);
     }
     
     foreach ($this->getVars() as $var)
